@@ -17,6 +17,17 @@ var socksdebug bool
 
 func main() {
 
+	colorReset := "\033[0m"
+    colorRed := "\033[31m"
+    colorGreen := "\033[32m"
+    colorYellow := "\033[33m"
+    colorBlue := "\033[34m"
+    colorPurple := "\033[35m"
+    colorCyan := "\033[36m"
+    colorWhite := "\033[37m"
+
+    _, _, _, _, _, _, _, _ = colorReset, colorRed, colorGreen, colorYellow, colorBlue, colorPurple, colorCyan, colorWhite
+
 	listen := flag.String("listen", "", "listen port for receiver address:port")
 	certificate := flag.String("cert", "", "certificate file")
 	socks := flag.String("socks", "127.0.0.1:1080", "socks address:port")
@@ -28,7 +39,7 @@ func main() {
 	optpassword := flag.String("pass", "", "Connect password")
 	recn := flag.Int("recn", 3, "reconnection limit")
 
-	rect := flag.Int("rect", 30, "reconnection delay")
+	rect := flag.Int("rect", 10, "reconnection delay")
 	fsocksdebug := flag.Bool("debug", false, "display debug info")
 	version := flag.Bool("version", false, "version information")
 	flag.Usage = func() {
@@ -61,12 +72,11 @@ func main() {
 		} else {
 			proxytout = time.Millisecond * 1000
 		}
-
 		if *optpassword != "" {
 			agentpassword = *optpassword
 		} else {
-			agentpassword = RandString(64)
-			log.Println("No password specified. Generated password is " + agentpassword)
+			agentpassword = RandString(32)
+			fmt.Println("No password specified. Generated password is:",string(colorYellow)+agentpassword+string(colorReset))
 		}
 
 		//listenForSocks(*listen, *certificate)
@@ -101,7 +111,7 @@ func main() {
 		if *optpassword != "" {
 			agentpassword = *optpassword
 		} else {
-			agentpassword = "RocksDefaultRequestRocksDefaultRequestRocksDefaultRequestRocks!!"
+			agentpassword = "C4vl@"
 		}
 
 		if *optuseragent != "" {

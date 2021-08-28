@@ -9,7 +9,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/base64"
-	socks5 "github.com/armon/go-socks5"
+	socks5 "go-socks5"
 	"github.com/hashicorp/yamux"
 	"io/ioutil"
 	"net/http"
@@ -242,6 +242,7 @@ func connectForSocks(tlsenable bool, address string, proxy string) error {
 
 	for {
 		stream, err := session.Accept()
+		log.Println(stream)
 		log.Println("Accepting stream")
 		if err != nil {
 			return err
